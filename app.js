@@ -13,7 +13,9 @@ const {
   actualizar,
   borrar,
   ayuda,
+  filtrar
 } = require("./funcionesDeTareas");
+const { guardar } = require("./helpers/leer-guardar");
 
 const comando = process.argv[2];
 const parametro2 = process.argv[3];
@@ -25,26 +27,22 @@ const tareas = (accion) => {
       //Comado: ayuda
       ayuda();
       break;
+    
+    case "listar":
+      //Comando: listar
+      listar(data);
+      break;
 
     case "crear":
       //Comado: crear <tarea>
       //ejemplo: crear Aprender NodeJS
 
-      let tarea = process.argv.splice(3, process.argv.length-1).join(" ");
+      const tarea = process.argv.splice(3, process.argv.length - 1).join(" ");
 
       if (noEstaVacio(tarea)) {
-        crear(tarea);
-      }
-
-      break;
-
-    case "listar":
-      //Comando: listar
-      //o tambien
-      //Comando: listar <estado>
-      //ejemplo: listar pendiente
-      if (esValidoElEstado(parametro2) || parametro2 === undefined) {
-        listar(parametro2);
+        const listaConNuevaTarea = crear(tarea);
+        guardar(listaConNuevaTarea);
+        listar(listaConNuevaTarea);
       }
 
       break;
@@ -52,9 +50,15 @@ const tareas = (accion) => {
     case "actualizar":
       //Comando: actualizar <numeroTarea> <estado>
       //ejemplo: actualizar 1 completado
-      if (numeroDeTareasEsValido(parametro2, data) && esValidoElEstado(parametro3)) {
-        actualizar(parametro2, parametro3);
-      }
+       if (
+        numeroDeTareasEsValido(parametro2, data) &&
+        esValidoElEstado(parametro3)
+      ) {
+        
+        const listaDeTareasAcualizada =  actualizar(parametro2, parametro3);
+        guardar(listaDeTareasAcualizada);
+        listar(listaDeTareasAcualizada);
+      } 
 
       break;
 
@@ -63,9 +67,20 @@ const tareas = (accion) => {
       //ejemplo: borrar 1
 
       if (numeroDeTareasEsValido(parametro2, data)) {
-        borrar(parametro2);
+        const listaConTareaBorrada= borrar(parametro2);
+        guardar(listaConTareaBorrada);
+        listar(listaConTareaBorrada);
       }
 
+      break;
+
+    case "filtrar":
+      //Comando: filtrar <estado>
+      //ejemplo: filtrar completado
+      if(esValidoElEstado(parametro2)){
+        const listaFiltrada = filtrar(parametro2);
+        listar(listaFiltrada);
+      }
       break;
 
     default:

@@ -21,7 +21,7 @@ const noEstaVacio = (tarea = "") => {
 };
 
 const numeroDeTareasEsValido = (numeroDeTarea, tareas) => {
-  if (+numeroDeTarea >= tareas.length || +numeroDeTarea === 0) {
+  if (+numeroDeTarea > tareas.length || +numeroDeTarea === 0) {
     console.log("Error: el numero de tarea ingresado no existe");
     return false;
   } else {

@@ -1,67 +1,77 @@
 const data = require("./db/tareas.json");
-const { guardar } = require("./helpers/leer-guardar");
+
+const { generarId } = require("./helpers/generadorId");
+
+////////////////////////////////Ayuda//////////////////////////////////////////
 
 const ayuda = () => {
   console.log("==========================================================");
   console.log("                 Comandos disponibles: ");
   console.log("==========================================================");
 
+  console.log("   - listar");
+  console.log("   - filtrar    <estado>");
   console.log("   - crear      <tarea>");
-  console.log("   - listar     <estado>");
   console.log("   - actualizar <numeroTarea>   <estado>");
   console.log("   - borrar     <numeroTarea>");
   console.log("   - ayuda");
+  
 
   console.log("==========================================================");
 };
 
-const listar = (estadoIngresado) => {
+////////////////////////////////Listar//////////////////////////////////////////
+
+const listar = (listaDeTareas) => {
   console.log("==========================================================");
   console.log("                 Lista de tareas: ");
   console.log("==========================================================");
 
-  for (let i = 0; i < data.length; i++) {
-    const element = data[i];
+  listaDeTareas.forEach((tarea, idx) =>
+    console.log(
+      `${idx + 1} - Tarea: ${tarea.titulo} --- Estado: ${tarea.estado}`
+    )
+  );
 
-    //si solo ingresa listar muestra todas las tareas
-    if (estadoIngresado === undefined) {
-      console.log(
-        `${i + 1} - Tarea: ${element.titulo} --- Estado: ${element.estado}`
-      );
-    }
-
-    //si ingresa listar y el estado es igual al ingresado muestra la tarea
-    if (estadoIngresado === data[i].estado) {
-      console.log(
-        `${i + 1} - Tarea: ${element.titulo} --- Estado: ${element.estado}`
-      );
-    }
-  }
   console.log("==========================================================\n");
 };
 
-const crear = (tarea) => {
-  data.push({
-    titulo: tarea,
-    estado: "pendiente",
-  });
-  guardar(data);
-  listar();
-};
+////////////////////////////////Crear//////////////////////////////////////////
+
+const crear = (tarea) => [...data, { id:generarId(5) ,titulo: tarea, estado: "pendiente" }];
+
+////////////////////////////////Actualizar////////////////////////////////////
 
 const actualizar = (numDeTarea, nuevoEstado) => {
-  data[numDeTarea - 1].estado = nuevoEstado;
-
-  console.log(data);
-  guardar(data);
-  listar();
+  
+  const id = data[numDeTarea - 1].id;
+  
+  const listaDeTareasAcualizada = data.map((tarea) => {
+    if (tarea.id === id) {
+      tarea.estado = nuevoEstado;
+    }
+    return tarea;
+  });
+  return listaDeTareasAcualizada;
 };
+
+////////////////////////////////Borrar////////////////////////////////////////
 
 const borrar = (numTareaBorrar) => {
-  data.splice(numTareaBorrar - 1, 1);
-  guardar(data);
-  listar();
+
+  const id = data[numTareaBorrar - 1].id;
+  
+  const listaConTareaBorrada = data.filter((tarea) => tarea.id !== id);
+  
+  return listaConTareaBorrada;
+  
 };
+
+///////////////////////////////Filtrar///////////////////////////////////////
+
+const filtrar = (estado) => data.filter((tarea) => tarea.estado === estado);
+ 
+
 
 module.exports = {
   ayuda,
@@ -69,4 +79,5 @@ module.exports = {
   crear,
   actualizar,
   borrar,
+  filtrar
 };

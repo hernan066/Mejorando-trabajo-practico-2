@@ -1,22 +1,32 @@
 [
    {
+      "id": "o7e10",
       "titulo": "Aprender Python",
       "estado": "pendiente"
    },
    {
+      "id": "o7e11",
       "titulo": "Aprender Javascript",
       "estado": "en-progreso"
    },
    {
+      "id": "o7e12",
       "titulo": "Aprender Git",
       "estado": "completado"
    },
    {
+      "id": "o7e13",
       "titulo": "Terminar calculadora",
       "estado": "completado"
    },
    {
+      "id": "o7e14",
       "titulo": "Esta es otra tarea",
       "estado": "pendiente"
+   },
+   {
+      "id": "o7e15",
+      "titulo": "NuevaTarea",
+      "estado": "en-progreso"
    }
 ]

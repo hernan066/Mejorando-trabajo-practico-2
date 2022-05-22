@@ -1,31 +1,31 @@
 const estados = ["pendiente", "completado", "en-progreso"];
 
 const esValidoElEstado = (estadoIngresado) => {
-  if (!estados.includes(estadoIngresado)) {
+  if (estados.includes(estadoIngresado)) {
+    return true;
+  } else {
     console.log(
-      "Error de comandos, para mas informacion ingrese la opcion: ayuda"
+      `Error: el estado ingresado debe ser ${estados.join(', ')}, para mas informacion ingrese la opcion: ayuda`
     );
     return false;
-  } else {
-    return true;
   }
 };
 
 const noEstaVacio = (tarea = "") => {
-  if (tarea === "") {
+  if (tarea !== "") {
+    return true;
+  } else {
     console.log("Error: ingrese una tarea");
     return false;
-  } else {
-    return true;
   }
 };
 
 const numeroDeTareasEsValido = (numeroDeTarea, tareas) => {
-  if (+numeroDeTarea > tareas.length || +numeroDeTarea === 0) {
-    console.log("Error: el numero de tarea ingresado no existe");
-    return false;
+  if (+numeroDeTarea <= tareas.length && +numeroDeTarea > 0) {
+      return true;
   } else {
-    return true;
+      console.log(`Error: el numero de tarea ingresado no existe, ingrese un numero entre 1 y ${tareas.length}`);
+    return false;
   }
 };
 

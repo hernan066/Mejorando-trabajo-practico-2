@@ -1,7 +1,8 @@
 # Mejorando-trabajo-practico-2
+
 <ul>
 <li>
- Fix numeroDeTareasEsValido( de --- if (+numeroDeTarea >= tareas.length || +numeroDeTarea === 0) --- paso a --- if (+numeroDeTarea > tareas.length || +numeroDeTarea === 0)
+ Mejorando validaciones, el mensaje de error de las mismas.
 </li>
   <li>
     Se agrego un generador de Ids
@@ -13,6 +14,3 @@
     Se modifico la funcion listar, y se creo la funcion filtrar
   </li>
 </ul>
-   
-
-
